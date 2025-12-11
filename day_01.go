@@ -23,7 +23,7 @@ func parseInput(inputPath string) [][]string {
 }
 
 func main() {
-	var inputPath = "/Users/maria/Documents/Go/AOC-Go-2025/inputs/input_day_01-1.dat"
+	inputPath := get_input_file_path("/inputs/input_day_01-1.dat")
 	actions := parseInput(inputPath)
 	curr_position := 50
 	result := 0
