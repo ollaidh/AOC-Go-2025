@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func getInputFromFile(inputPath string) []string {
+func getLinesFromFile(inputPath string) []string {
 	f, _ := os.Open(inputPath)
 	scanner := bufio.NewScanner(f)
 	result := []string{}
@@ -19,22 +19,28 @@ func getInputFromFile(inputPath string) []string {
 	return result
 }
 
-func parseInput(input []string) []int {
+func parseInput(input []string) ([]int, error) {
 	result := []int{}
 	for _, action := range input {
-		value, _ := strconv.Atoi(action[1:])
+		value, err := strconv.Atoi(action[1:])
+		if err != nil {
+			return nil, err
+		}
 		if action[:1] == "L" {
 			value = value * (-1)
 		}
 		result = append(result, value)
 	}
-	return result
+	return result, nil
 }
 
 func main() {
 	inputPath := get_input_file_path("/inputs/input_day_01-1.dat")
-	input := getInputFromFile(inputPath)
-	actions := parseInput(input)
+	input := getLinesFromFile(inputPath)
+	actions, err := parseInput(input)
+	if err != nil {
+		panic(err)
+	}
 	curr_position := 50
 	result := 0
 
