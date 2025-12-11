@@ -7,36 +7,40 @@ import (
 	"strconv"
 )
 
-func parseInput(inputPath string) [][]string {
+func getInputFromFile(inputPath string) []string {
 	f, _ := os.Open(inputPath)
 	scanner := bufio.NewScanner(f)
-	actions := [][]string{}
+	result := []string{}
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		direction := line[:1]
-		steps := line[1:]
-		one_action := []string{direction, steps}
-		actions = append(actions, one_action)
+		result = append(result, line)
 	}
-	return actions
+	return result
+}
+
+func parseInput(input []string) []int {
+	result := []int{}
+	for _, action := range input {
+		value, _ := strconv.Atoi(action[1:])
+		if action[:1] == "L" {
+			value = value * (-1)
+		}
+		result = append(result, value)
+	}
+	return result
 }
 
 func main() {
 	inputPath := get_input_file_path("/inputs/input_day_01-1.dat")
-	actions := parseInput(inputPath)
+	input := getInputFromFile(inputPath)
+	actions := parseInput(input)
 	curr_position := 50
 	result := 0
 
-	for _, v := range actions {
-		steps, _ := strconv.Atoi(v[1])
-		steps = steps % 100
-
-		if v[0] == "L" {
-			curr_position = curr_position - steps
-		} else {
-			curr_position = curr_position + steps
-		}
+	for _, step := range actions {
+		step = step % 100
+		curr_position = curr_position + step
 
 		if curr_position < 0 {
 			curr_position = curr_position + 100
