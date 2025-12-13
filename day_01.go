@@ -34,6 +34,25 @@ func parseInput(input []string) ([]int, error) {
 	return result, nil
 }
 
+func rotate(start_position int, actions []int) int {
+	result := 0
+
+	for _, step := range actions {
+		step = step % 100
+		start_position = start_position + step
+
+		if start_position < 0 {
+			start_position = start_position + 100
+		} else if start_position > 99 {
+			start_position = start_position - 100
+		}
+		if start_position == 0 {
+			result++
+		}
+	}
+	return result
+}
+
 func main() {
 	inputPath := get_input_file_path("/inputs/input_day_01-1.dat")
 	input := getLinesFromFile(inputPath)
@@ -41,22 +60,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	curr_position := 50
-	result := 0
 
-	for _, step := range actions {
-		step = step % 100
-		curr_position = curr_position + step
+	result := rotate(50, actions)
 
-		if curr_position < 0 {
-			curr_position = curr_position + 100
-		} else if curr_position > 99 {
-			curr_position = curr_position - 100
-		}
-		if curr_position == 0 {
-			result++
-		}
-	}
 	fmt.Printf("%d", result)
 
 }
