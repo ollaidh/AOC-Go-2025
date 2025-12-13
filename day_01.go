@@ -34,7 +34,7 @@ func parseInput(input []string) ([]int, error) {
 	return result, nil
 }
 
-func rotate(start_position int, actions []int) int {
+func rotate_count_zero_pos(start_position int, actions []int) int {
 	result := 0
 
 	for _, step := range actions {
@@ -61,7 +61,7 @@ func main() {
 		panic(err)
 	}
 
-	result := rotate(50, actions)
+	result := rotate_count_zero_pos(50, actions)
 
 	fmt.Printf("%d", result)
 

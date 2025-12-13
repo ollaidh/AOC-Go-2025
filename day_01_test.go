@@ -15,3 +15,12 @@ func TestParseInput(t *testing.T) {
 	assert.Equal(t, err, nil)
 
 }
+
+func TestRotateTest(t *testing.T) {
+	actions := []int{-68, -30, 48, -5, 60, -55, -1, -99, 14, -82}
+	start_position := 50
+	expected_result := 3
+	result := rotate_count_zero_pos(start_position, actions)
+
+	assert.Equal(t, result, expected_result)
+}
