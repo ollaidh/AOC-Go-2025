@@ -17,6 +17,19 @@ func TestParseInput(t *testing.T) {
 
 }
 
+func TestStep(t *testing.T) {
+	assert.Equal(t, 82, step(50, -68).position)
+	assert.Equal(t, 52, step(82, -30).position)
+	assert.Equal(t, 0, step(52, 48).position)
+	assert.Equal(t, 95, step(0, -5).position)
+	assert.Equal(t, 55, step(95, 60).position)
+	assert.Equal(t, 0, step(55, -55).position)
+	assert.Equal(t, 99, step(0, -1).position)
+	assert.Equal(t, 0, step(99, -99).position)
+	assert.Equal(t, 14, step(0, 14).position)
+	assert.Equal(t, 32, step(14, -82).position)
+}
+
 func TestRotateCountZeroPos(t *testing.T) {
 	actions := []int{-68, -30, 48, -5, 60, -55, -1, -99, 14, -82}
 	startPosition := 50

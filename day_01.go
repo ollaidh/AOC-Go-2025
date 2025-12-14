@@ -7,6 +7,11 @@ import (
 	"strconv"
 )
 
+type StepResult struct {
+	position    int
+	zeroesCount int
+}
+
 func getLinesFromFile(inputPath string) []string {
 	f, _ := os.Open(inputPath)
 	scanner := bufio.NewScanner(f)
@@ -34,21 +39,34 @@ func parseInput(input []string) ([]int, error) {
 	return result, nil
 }
 
+func step(startPosition int, step int) StepResult {
+	zeroesCount := 0
+	step = step % 100
+	startPosition = startPosition + step
+
+	if startPosition < 0 {
+		startPosition = startPosition + 100
+	} else if startPosition > 99 {
+		startPosition = startPosition - 100
+	}
+	if startPosition == 0 {
+		zeroesCount++
+	}
+	return StepResult{
+		position:    startPosition,
+		zeroesCount: zeroesCount,
+	}
+}
+
 func rotateCountZeroPos(startPosition int, actions []int) int {
 	result := 0
 
-	for _, step := range actions {
-		step = step % 100
-		startPosition = startPosition + step
-
-		if startPosition < 0 {
-			startPosition = startPosition + 100
-		} else if startPosition > 99 {
-			startPosition = startPosition - 100
-		}
-		if startPosition == 0 {
+	for _, action := range actions {
+		currResult := step(startPosition, action)
+		if currResult.position == 0 {
 			result++
 		}
+		startPosition = currResult.position
 	}
 	return result
 }
