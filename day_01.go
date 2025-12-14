@@ -40,21 +40,21 @@ func parseInput(input []string) ([]int, error) {
 }
 
 func step(startPosition int, step int) StepResult {
-	zeroesCount := 0
-	step = step % 100
-	startPosition = startPosition + step
+	fullCirclesCount := max(step, -step) / 100
 
-	if startPosition < 0 {
-		startPosition = startPosition + 100
-	} else if startPosition > 99 {
-		startPosition = startPosition - 100
+	step = step % 100
+	newPosition := (startPosition + 100 + step) % 100
+
+	if step < 0 && -step >= startPosition && startPosition != 0 {
+		fullCirclesCount++
 	}
-	if startPosition == 0 {
-		zeroesCount++
+	if step > 0 && newPosition < startPosition {
+		fullCirclesCount++
 	}
+
 	return StepResult{
-		position:    startPosition,
-		zeroesCount: zeroesCount,
+		position:    newPosition,
+		zeroesCount: fullCirclesCount,
 	}
 }
 
@@ -74,34 +74,10 @@ func rotateCountZeroPos(startPosition int, actions []int) int {
 func rotateCountAllZeroes(startPosition int, actions []int) int {
 	result := 0
 
-	for _, step := range actions {
-		additionalZeroes := step / 100
-		if additionalZeroes < 0 {
-			additionalZeroes = additionalZeroes * (-1)
-		}
-		fmt.Printf("%v %d \n", step, additionalZeroes)
-
-		step = step % 100
-		newPosition := startPosition + step
-		fmt.Printf("step %d, pos %d, new_pos %v ", step, startPosition, newPosition)
-
-		if newPosition < 0 {
-			newPosition = newPosition + 100
-		} else if newPosition > 99 {
-			newPosition = newPosition - 100
-		}
-
-		if step <= 0 && startPosition <= newPosition {
-			result++
-		}
-		if step > 0 && startPosition > newPosition {
-			result++
-		}
-
-		result = result + additionalZeroes
-		startPosition = newPosition
-		fmt.Printf("%d \n", result)
-
+	for _, action := range actions {
+		currResult := step(startPosition, action)
+		result += currResult.zeroesCount
+		startPosition = currResult.position
 	}
 	return result
 }
@@ -115,9 +91,9 @@ func main() {
 	}
 
 	resultPart1 := rotateCountZeroPos(50, actions)
-	fmt.Printf("%d", resultPart1)
+	fmt.Println(resultPart1)
 
 	resultPart2 := rotateCountAllZeroes(50, actions)
-	fmt.Printf("%d", resultPart2)
+	fmt.Println(resultPart2)
 
 }
