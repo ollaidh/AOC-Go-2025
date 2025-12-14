@@ -34,35 +34,72 @@ func parseInput(input []string) ([]int, error) {
 	return result, nil
 }
 
-func rotate_count_zero_pos(start_position int, actions []int) int {
+func rotateCountZeroPos(startPosition int, actions []int) int {
 	result := 0
 
 	for _, step := range actions {
 		step = step % 100
-		start_position = start_position + step
+		startPosition = startPosition + step
 
-		if start_position < 0 {
-			start_position = start_position + 100
-		} else if start_position > 99 {
-			start_position = start_position - 100
+		if startPosition < 0 {
+			startPosition = startPosition + 100
+		} else if startPosition > 99 {
+			startPosition = startPosition - 100
 		}
-		if start_position == 0 {
+		if startPosition == 0 {
 			result++
 		}
 	}
 	return result
 }
 
+func rotateCountAllZeroes(startPosition int, actions []int) int {
+	result := 0
+
+	for _, step := range actions {
+		additionalZeroes := step / 100
+		if additionalZeroes < 0 {
+			additionalZeroes = additionalZeroes * (-1)
+		}
+		fmt.Printf("%v %d \n", step, additionalZeroes)
+
+		step = step % 100
+		newPosition := startPosition + step
+		fmt.Printf("step %d, pos %d, new_pos %v ", step, startPosition, newPosition)
+
+		if newPosition < 0 {
+			newPosition = newPosition + 100
+		} else if newPosition > 99 {
+			newPosition = newPosition - 100
+		}
+
+		if step <= 0 && startPosition <= newPosition {
+			result++
+		}
+		if step > 0 && startPosition > newPosition {
+			result++
+		}
+
+		result = result + additionalZeroes
+		startPosition = newPosition
+		fmt.Printf("%d \n", result)
+
+	}
+	return result
+}
+
 func main() {
-	inputPath := get_input_file_path("/inputs/input_day_01-1.dat")
+	inputPath := getInputFilePath("/inputs/input_day_01-1.dat")
 	input := getLinesFromFile(inputPath)
 	actions, err := parseInput(input)
 	if err != nil {
 		panic(err)
 	}
 
-	result := rotate_count_zero_pos(50, actions)
+	resultPart1 := rotateCountZeroPos(50, actions)
+	fmt.Printf("%d", resultPart1)
 
-	fmt.Printf("%d", result)
+	resultPart2 := rotateCountAllZeroes(50, actions)
+	fmt.Printf("%d", resultPart2)
 
 }

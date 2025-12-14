@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func get_input_file_path(relativePath string) string {
+func getInputFilePath(relativePath string) string {
 	_, b, _, _ := runtime.Caller(0)
 	basepath := filepath.Dir(b)
 	var s strings.Builder
