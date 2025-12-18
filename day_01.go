@@ -7,6 +7,29 @@ import (
 	"strconv"
 )
 
+type Day1Part1 struct{}
+
+func (day Day1Part1) solve([]string) string {
+	inputPath := getInputFilePath("/inputs/input_day_01-1.dat")
+	input := getLinesFromFile(inputPath)
+	actions, err := parseInput(input)
+	if err != nil {
+		panic(err)
+	}
+
+	resultPart1 := rotateCountZeroPos(50, actions)
+	fmt.Println(resultPart1)
+
+	resultPart2 := rotateCountAllZeroes(50, actions)
+	fmt.Println(resultPart2)
+
+}
+
+type Day1Part2 struct{}
+
+func (day Day1Part2) solve([]string) string {
+}
+
 type StepResult struct {
 	position    int
 	zeroesCount int
@@ -80,20 +103,4 @@ func rotateCountAllZeroes(startPosition int, actions []int) int {
 		startPosition = currResult.position
 	}
 	return result
-}
-
-func main() {
-	inputPath := getInputFilePath("/inputs/input_day_01-1.dat")
-	input := getLinesFromFile(inputPath)
-	actions, err := parseInput(input)
-	if err != nil {
-		panic(err)
-	}
-
-	resultPart1 := rotateCountZeroPos(50, actions)
-	fmt.Println(resultPart1)
-
-	resultPart2 := rotateCountAllZeroes(50, actions)
-	fmt.Println(resultPart2)
-
 }
