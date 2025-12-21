@@ -1,9 +1,13 @@
 package main
 
 import (
+	"bufio"
+	"os"
 	"strconv"
 	"strings"
 )
+
+type Day2Part1 struct{}
 
 type Range struct {
 	minValue int
@@ -19,5 +23,12 @@ func parseInputDayTwo(input string) []Range {
 		end, _ := strconv.Atoi(currCurrRange[1])
 		result = append(result, Range{minValue: start, maxValue: end})
 	}
+	return result
+}
+
+func readInputDayTwo(inputPath string) string {
+	f, _ := os.Open(inputPath)
+	scanner := bufio.NewScanner(f)
+	result := scanner.Text()
 	return result
 }
