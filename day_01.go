@@ -1,53 +1,15 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 type Day1Part1 struct{}
 
-func (day Day1Part1) solve([]string) string {
-	inputPath := getInputFilePath("/inputs/input_day_01-1.dat")
-	input := getLinesFromFile(inputPath)
-	actions, err := parseInput(input)
-	if err != nil {
-		panic(err)
-	}
-
-	resultPart1 := rotateCountZeroPos(50, actions)
-	fmt.Println(resultPart1)
-
-	resultPart2 := rotateCountAllZeroes(50, actions)
-	fmt.Println(resultPart2)
-
-}
-
-type Day1Part2 struct{}
-
-func (day Day1Part2) solve([]string) string {
-}
-
-type StepResult struct {
-	position    int
-	zeroesCount int
-}
-
-func getLinesFromFile(inputPath string) []string {
-	f, _ := os.Open(inputPath)
-	scanner := bufio.NewScanner(f)
-	result := []string{}
-
-	for scanner.Scan() {
-		line := scanner.Text()
-		result = append(result, line)
-	}
-	return result
-}
-
-func parseInput(input []string) ([]int, error) {
+func getInputDay1(inputRaw string) ([]int, error) {
+	input := strings.Split(inputRaw, "\n")
 	result := []int{}
 	for _, action := range input {
 		value, err := strconv.Atoi(action[1:])
@@ -60,6 +22,42 @@ func parseInput(input []string) ([]int, error) {
 		result = append(result, value)
 	}
 	return result, nil
+}
+
+func (day Day1Part1) solve(rawInput string) string {
+	actions, err := getInputDay1(rawInput)
+	if err != nil {
+		panic(err)
+	}
+	resultPart1 := rotateCountZeroPos(50, actions)
+	return strconv.Itoa(resultPart1)
+
+}
+
+type Day1Part2 struct{}
+
+func (day Day1Part2) solve(rawInput string) string {
+	actions, err := getInputDay1(rawInput)
+	if err != nil {
+		panic(err)
+	}
+	resultPart2 := rotateCountAllZeroes(50, actions)
+	return strconv.Itoa(resultPart2)
+
+}
+
+type StepResult struct {
+	position    int
+	zeroesCount int
+}
+
+func getInputFromFile(inputPath string) string {
+	b, err := os.ReadFile(inputPath)
+	if err != nil {
+		panic(err)
+	}
+
+	return string(b)
 }
 
 func step(startPosition int, step int) StepResult {
