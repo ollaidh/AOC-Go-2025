@@ -1,7 +1,7 @@
 package main
 
 type solver interface {
-	solve(string) string
+	solve([]string) string
 }
 
 type Date struct {

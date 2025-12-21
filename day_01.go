@@ -3,13 +3,11 @@ package main
 import (
 	"os"
 	"strconv"
-	"strings"
 )
 
 type Day1Part1 struct{}
 
-func getInputDay1(inputRaw string) ([]int, error) {
-	input := strings.Split(inputRaw, "\n")
+func getInputDay1(input []string) ([]int, error) {
 	result := []int{}
 	for _, action := range input {
 		value, err := strconv.Atoi(action[1:])
@@ -24,8 +22,8 @@ func getInputDay1(inputRaw string) ([]int, error) {
 	return result, nil
 }
 
-func (day Day1Part1) solve(rawInput string) string {
-	actions, err := getInputDay1(rawInput)
+func (day Day1Part1) solve(input []string) string {
+	actions, err := getInputDay1(input)
 	if err != nil {
 		panic(err)
 	}
@@ -36,8 +34,8 @@ func (day Day1Part1) solve(rawInput string) string {
 
 type Day1Part2 struct{}
 
-func (day Day1Part2) solve(rawInput string) string {
-	actions, err := getInputDay1(rawInput)
+func (day Day1Part2) solve(input []string) string {
+	actions, err := getInputDay1(input)
 	if err != nil {
 		panic(err)
 	}

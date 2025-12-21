@@ -7,7 +7,7 @@ import (
 )
 
 func TestGetInputDay1(t *testing.T) {
-	testInput := "L68\nL30\nR48\nL5\nR60\nL55\nL1\nL99\nR14\nL82"
+	testInput := []string{"L68", "L30", "R48", "L5", "R60", "L55", "L1", "L99", "R14", "L82"}
 	expectedResult := []int{-68, -30, 48, -5, 60, -55, -1, -99, 14, -82}
 	result, err := getInputDay1(testInput)
 
@@ -47,14 +47,14 @@ func TestStepZeroesCount(t *testing.T) {
 }
 
 func TestDay1Part1(t *testing.T) {
-	actions := "L68\nL30\nR48\nL5\nR60\nL55\nL1\nL99\nR14\nL82"
+	actions := []string{"L68", "L30", "R48", "L5", "R60", "L55", "L1", "L99", "R14", "L82"}
 	day := Day1Part1{}
 	result := day.solve(actions)
 	assert.Equal(t, "3", result)
 }
 
 func TestDay2Part2(t *testing.T) {
-	actions := "L68\nL30\nR48\nL5\nR60\nL55\nL1\nL99\nR14\nL82"
+	actions := []string{"L68", "L30", "R48", "L5", "R60", "L55", "L1", "L99", "R14", "L82"}
 	day := Day1Part2{}
 	result := day.solve(actions)
 	assert.Equal(t, "6", result)
