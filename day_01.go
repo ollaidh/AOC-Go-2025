@@ -34,7 +34,7 @@ func (day Day1Part1) solve(input []string) string {
 
 type Day1Part2 struct{}
 
-func (day Day1Part2) solve(input []string) string {
+func (day Day1Part2) solve(input []string) string { // TODO return error not panic
 	actions, err := getInputDay1(input)
 	if err != nil {
 		panic(err)

@@ -23,10 +23,16 @@ func main() {
 	}
 	var result string
 
+	inputsFolderPath := getInputsFolderPath()
+
 	for date, callable := range tasks {
-		filepath := "qqqq"
-		input := getDataFromFile(filepath)
-		result = callable.solve(input)
-		fmt.Printf("Year %v Day %v Part %v result: %v\n", date.year, date.day, date.part, result)
+		filePaths := getInputFilePaths(date, inputsFolderPath)
+
+		for _, filepath := range filePaths {
+			input := getDataFromFile(filepath)
+			result = callable.solve(input)
+			fmt.Printf("Year %v Day %v Part %v Path %v result: %v\n", date.year, date.day, date.part, filepath, result)
+		}
 	}
+
 }
