@@ -2,30 +2,28 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strconv"
-	"strings"
 )
+
+func getInputsFolderPath() (string, error) {
+	inputsFolderRootPath := os.Getenv("INPUTS_FOLDER")
+	if inputsFolderRootPath == "" {
+		return "", errors.New("No INPUTS_FOLDER environment variable is found!")
+	}
+	return inputsFolderRootPath, nil
+}
 
 func getInputFilePaths(date Date, filesPath string) []string {
 	fileName := fmt.Sprintf("input_day_%s_part_%s.dat", strconv.Itoa(date.day), strconv.Itoa(date.part))
 	fileNames := []string{fileName}
 	for i := range fileNames {
-		fileNames[i] = fmt.Sprintf("%s/%s", filesPath, fileNames[i])
+		fileNames[i] = filepath.Join(filesPath, fileNames[i])
 	}
 	return fileNames
-}
-
-func getInputsFolderPath() string { // TODO do func with env variable
-	_, b, _, _ := runtime.Caller(0)
-	basepath := filepath.Dir(b)
-	var s strings.Builder
-	s.WriteString(basepath)
-	inputPath := s.String()
-	return inputPath
 }
 
 func getDataFromFile(inputPath string) []string {
